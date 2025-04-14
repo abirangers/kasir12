@@ -6,14 +6,15 @@ use Inertia\Inertia;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-Route::get('admin/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'isAdmin'])->name('dashboard');
+Route::get('admin/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'isAdmin'])
+    ->name('dashboard');
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('produks', ProdukController::class);
